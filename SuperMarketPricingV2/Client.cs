@@ -1,20 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SuperMarketPricingV2
 {
     public class Client
     {
         public Dictionary<Product, float> cart = new Dictionary<Product, float>();
-        public void AddToCart(Product product, float number)
+        public void AddToCart(Product product, float numberToBuy)
         {
+            if(!product.ByWeight && (numberToBuy - (int)numberToBuy != 0))
+                    throw new ArgumentException($"Error case: you cannot buy {numberToBuy} of a {product.Name}");
             if (cart.ContainsKey(product))
             {
-                cart[product] = number + cart[product];
+                cart[product] = numberToBuy + cart[product];
             }
             else
             {
-                cart.Add(product, number);
+                cart.Add(product, numberToBuy);
             }
+
         }
         public void RemoveFromCart(Product product, float number)
         {

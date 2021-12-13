@@ -19,7 +19,7 @@ namespace SuperMarketPricingV2
         {
             Name = "tomato",
             HasReduction = false,
-            ByWeight = false,
+            ByWeight = true,
             UnitaryPrice = 5
         };        
         [Fact]
@@ -27,11 +27,14 @@ namespace SuperMarketPricingV2
         {   //Arrange
             clt.cart = new Dictionary<Product, float>();
             //act
-            clt.AddToCart(Milk, 1);
             clt.AddToCart(Tomato, 1.5f);
             clt.AddToCart(Tomato, 1.5f);
+            Action act = ()=> clt.AddToCart(Milk, 1.5f);
             //Assert
-            Assert.True(clt.cart.ContainsKey(Milk) && clt.cart[Tomato] == 3);
+            Assert.True( clt.cart[Tomato] == 3); 
+            ArgumentException exception = Assert.Throws<ArgumentException>(act);
+            Assert.Equal("Error case: you cannot buy 1,5 of a Milka", exception.Message);
+
         }
         [Fact]
         public void Remove_Product_When_RemoveToCart()
