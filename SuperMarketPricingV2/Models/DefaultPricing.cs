@@ -4,9 +4,9 @@ using System.Text;
 
 namespace SuperMarketPricingV2
 {
-    public class DefaultPricing : Pricing
+    public class DefaultPricing : IPricing
     {
-        public override decimal CalculatePrice(Product product, float numberBought)
+        public decimal CalculatePrice(Product product, float numberBought)
         {
             return  product.UnitaryPrice * (decimal)numberBought;
         }
